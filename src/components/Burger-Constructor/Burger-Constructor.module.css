@@ -1,0 +1,49 @@
+.burgerConstructor {
+    composes: pt-25 pl-4 from global;
+    width: 600px;
+    max-height: 912px;
+    display: 'flex'; 
+    flex-direction: 'column';
+    gap: 10px;
+}
+
+.insideSection{
+    composes: custom-scroll from global;
+    max-height: 470px;
+    overflow-y: scroll;
+    list-style: none outside;
+}
+
+.elementWrapper {
+    composes: mt-4 from global;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: 24px;
+}
+
+.elementTop {
+    margin: 0;
+    padding-left: 48px;
+}
+
+.elementBottom {
+    composes: mt-4 mb-10 from global;
+    padding-left: 48px;
+}
+
+.allContainer {
+    composes: mr-4 mt-10 from global;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.price {
+    composes: text text_type_digits-medium mr-2 from global;
+}
+
+.elementInfo {
+    composes: ml-6 from global;
+}
