@@ -5,7 +5,7 @@ import styles from './App-Header.module.css';
 function AppHeader() {
 
     return (
-    <div className={styles.appHeader}>
+    <header className={styles.appHeader}>
         <div className={styles.buttonsWrapper}>
             <div className={styles.partInterface}>
                 <BurgerIcon type="primary" />
@@ -22,7 +22,7 @@ function AppHeader() {
             <span className={styles.buttonText}>Личный кабинет</span>
         </div>
         
-    </div>
+    </header>
     );
 }
 

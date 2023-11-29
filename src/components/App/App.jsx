@@ -15,37 +15,64 @@ function App() {
 
     const ingredientsFromServer = async () => {
         try {
-            let response = await fetch(API_URL);
+            const response = await fetch(API_URL);
             if (!response.ok) {
                 throw new Error('Ошибка при загрузке данных с сервера');
             }
 
-            let data = (await response.json()).data;
+            const data = (await response.json()).data;
             setIngredients(data);
+
             data.map((item) => setCountIngredients(countIngredients.set(item._id, 0)))
+            
+            addExampleForConstructor(data)
         } catch (err) {
             console.log(err.message);
         }
     }
 
-    useEffect(() => {
-        ingredientsFromServer()
+
+    const addBun = (item) => {
+        if (bun != null) {
+            setCountIngredients(last => last.set(bun._id, 0))
+            setTotalPrice(last => last - bun.price * 2)
+        }
+        setBun(item)
+        setCountIngredients(last => last.set(item._id, 1))
+        setTotalPrice(last => last + item.price * 2)
         
-    }, []);
+    }
+
+    const addOtherIngregient = (item) => {
+        setCountIngredients(last => new Map(last.set(item._id, last.get(item._id) + 1)))
+        setChosedIngregients(last => [...last, item])
+        setTotalPrice(last => last + item.price)
+    }
+
+    const addExampleForConstructor = (ingredients) => {
+        addBun(ingredients[0])
+        addOtherIngregient(ingredients[8])
+        addOtherIngregient(ingredients[5])
+        addOtherIngregient(ingredients[11])
+        addOtherIngregient(ingredients[10])
+        addOtherIngregient(ingredients[10])
+        console.log(chosedIngregients)
+    }
+
 
     useEffect(() => {
-        console.log(countIngredients)}, []);
+        ingredientsFromServer();
+    }, []);
+
+
 
     return (
     <div className={styles.app}>
         <AppHeader></AppHeader>
-        <div className={styles.appBody}>
-            <BurgerIngredients ingredients={ingredients} bun={bun} setBun={setBun} countIngredients={countIngredients} 
-            setCountIngredients={setCountIngredients} chosedIngregients={chosedIngregients} setChosedIngregients={setChosedIngregients} 
-            totalPrice={totalPrice} setTotalPrice={setTotalPrice}/>
-            <BurgerConstructor ingredients={ingredients} countIngredients={countIngredients} setCountIngredients={setCountIngredients} 
-            bun={bun} chosedIngregients={chosedIngregients} setChosedIngregients={setChosedIngregients} totalPrice={totalPrice} setTotalPrice={setTotalPrice}/>
-        </div>
+        <main className={styles.appBody}>
+            <BurgerIngredients ingredients={ingredients} countIngredients={countIngredients}/>
+            <BurgerConstructor bun={bun} chosedIngregients={chosedIngregients} totalPrice={totalPrice}/>
+        </main>
     </div>
     );
 }

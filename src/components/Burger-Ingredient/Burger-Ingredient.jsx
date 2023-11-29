@@ -26,10 +26,9 @@ function BurgerIngredient({item, countIngr}) {
         {
             showModal && (
                 <>
-                <Modal title="Детали ингредиента" setShowModal={setShowModal}>
-                    <IngredientDetails item={item}/>
-                </Modal>
-                <ModalOverlay />
+                    <Modal title="Детали ингредиента" setShowModal={setShowModal}> 
+                        <IngredientDetails item={item}/>
+                    </Modal>
                 </>
                 
             )

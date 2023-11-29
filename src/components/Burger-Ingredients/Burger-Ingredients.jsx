@@ -8,7 +8,7 @@ BurgerIngredients.propTypes = {
     ingredients: PropTypes.array, 
     bun: PropTypes.object, 
     setBun: PropTypes.func, 
-    countIngredients: PropTypes.number, 
+    countIngredients: PropTypes.instanceOf(Map), 
     setCountIngredients: PropTypes.func, 
     chosedIngregients: PropTypes.array, 
     setChosedIngregients: PropTypes.func, 
@@ -16,26 +16,9 @@ BurgerIngredients.propTypes = {
     setTotalPrice: PropTypes.func,
 };
 
-function BurgerIngredients({ingredients, bun, setBun, countIngredients, setCountIngredients, chosedIngregients, setChosedIngregients, totalPrice, setTotalPrice}) {
+function BurgerIngredients({ingredients, countIngredients}) {
     
     let [current, setCurrent] = useState('Булки')
-
-
-    let addBun = (item) => {
-        if (bun != null) {
-            setCountIngredients(countIngredients.set(bun._id, 0))
-            setTotalPrice(totalPrice - bun.price * 2)
-        }
-        setBun(item)
-        setCountIngredients(countIngredients.set(item._id, 1))
-        setTotalPrice(totalPrice + item.price * 2)
-    }
-
-    let addOtherIngregient = (item) => {
-        setCountIngredients(new Map(countIngredients.set(item._id, countIngredients.get(item._id) + 1)))
-        setChosedIngregients([...chosedIngregients, item])
-        setTotalPrice(totalPrice + item.price)
-    }
 
     return (
     <div className={styles.burgerIngredients}>

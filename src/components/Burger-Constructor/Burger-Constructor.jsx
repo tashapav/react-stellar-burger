@@ -3,7 +3,6 @@ import styles from './Burger-Constructor.module.css';
 import {ConstructorElement, Button, DragIcon, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components'
 import Modal from '../Modal/Modal';
 import OrderDetails from '../Order-Details/Order-Details';
-import ModalOverlay from '../Modal-Overlay/Modal-Overlay';
 import PropTypes from "prop-types";
 
 BurgerConstructor.propTypes = {
@@ -16,10 +15,10 @@ BurgerConstructor.propTypes = {
     setTotalPrice: PropTypes.func
 };
 
-function BurgerConstructor({ingredients, countIngredients, bun, chosedIngregients, setChosedIngregients, totalPrice, setTotalPrice}) {
+function BurgerConstructor({bun, chosedIngregients, totalPrice}) {
 
     const [showModal, setShowModal] = useState(false)
-
+    
     return (
         <div className={styles.burgerConstructor}>
             <div className={styles.elementTop}>
@@ -37,7 +36,7 @@ function BurgerConstructor({ingredients, countIngredients, bun, chosedIngregient
                     return <div className={styles.elementWrapper}>
                         <DragIcon type="primary" />
                         <ConstructorElement className={styles.elementInfo}
-                            key={item.name + Math.random()}
+                            key={item._id}
                             text={item.name}
                             price={item.price}
                             thumbnail={item.image}
@@ -57,7 +56,7 @@ function BurgerConstructor({ingredients, countIngredients, bun, chosedIngregient
             <div className={styles.allContainer}>
                 <p className={styles.price}>{totalPrice}</p>
                 <CurrencyIcon type="primary" styles={{"margin-rigth": "40px"}}/>
-                <Button htmlType="button" type="primary" size="medium" >Оформить заказ</Button>
+                <Button htmlType="button" type="primary" size="medium" onClick={() => setShowModal(true)}>Оформить заказ</Button>
             </div>
             {
                 showModal && (
@@ -65,7 +64,6 @@ function BurgerConstructor({ingredients, countIngredients, bun, chosedIngregient
                         <Modal title=" " setShowModal={setShowModal}>
                             <OrderDetails />
                         </Modal>
-                        <ModalOverlay />
                     </> 
             )
         }
